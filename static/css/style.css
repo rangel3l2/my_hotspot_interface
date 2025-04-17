@@ -1,0 +1,98 @@
+body {
+  font-family: Arial;
+  background: #f8f8f8;
+  padding: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+input {
+  width: 90%;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+td input {
+  width: 100%;
+  display: inline-block;
+  margin: 0;
+}
+button {
+  margin: 2px;
+  padding: 5px 10px;
+}
+
+.loading {
+  display: none;
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  animation: spin 1s linear infinite;
+}
+
+.loading.visible {
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-online {
+  background-color: #4CAF50;
+}
+
+.status-offline {
+  background-color: #f44336;
+}
+
+.section-title {
+  margin-top: 20px;
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 4px;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  background: #ff5252;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: none;
+  animation: slideIn 0.5s;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}

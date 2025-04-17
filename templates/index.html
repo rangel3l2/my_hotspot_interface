@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotspot Manager</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/about.css">
+</head>
+<body>
+  <h1>🛜 Hotspot Manager <button id="btnSobre" class="about-button">Sobre</button></h1>
+
+  <button onclick="ativar()" id="btnAtivar">Ativar Hotspot</button>
+  <div class="loading" id="loadingBtnAtivar"></div>
+  <button onclick="desativar()" id="btnDesativar">Desativar Hotspot</button>
+  <div class="loading" id="loadingBtnDesativar"></div>
+
+  <h2>📡 Dispositivos (<span id="contador">0</span>)</h2>
+  <div class="loading" id="loadingTabela"></div>
+  
+  <h3 class="section-title">Conectados</h3>
+  <table>
+    <thead>
+      <tr><th>Status</th><th>IP</th><th>MAC</th><th>Apelido</th></tr>
+    </thead>
+    <tbody id="tabelaConectados"></tbody>
+  </table>
+
+  <h3 class="section-title">Desconectados</h3>
+  <table>
+    <thead>
+      <tr><th>Status</th><th>MAC</th><th>Apelido</th></tr>
+    </thead>
+    <tbody id="tabelaDesconectados"></tbody>
+  </table>
+
+  <div id="notification" class="notification"></div>
+  <audio id="notificationSound" preload="auto">
+    <source src="/static/sound/notification.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Modal Sobre -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Como funciona o Hotspot Manager? 🎓</h2>
+      
+      <div class="network-illustration">
+        <div class="computer-icon">💻</div>
+        <div class="wifi-waves">
+          <div class="wave wave1"></div>
+          <div class="wave wave2"></div>
+          <div class="wave wave3"></div>
+        </div>
+        <div class="devices">
+          <div class="device">📱</div>
+          <div class="device">📱</div>
+          <div class="device">💻</div>
+        </div>
+      </div>
+
+      <div class="explanation">
+        <h3>O que é um Hotspot? 🤔</h3>
+        <p>Um hotspot é como uma "ponte mágica" que permite seu computador crie uma rede com outros dispositivos!</p>
+
+        <h3>Como funciona? 🌟</h3>
+        <ul>
+          <li>🟢 Quando você ativa o hotspot, seu computador vira um "roteador ambulante" </li>
+          <li>📱 Celulares e outros computadores podem se conectar a ele</li>
+          <li>🔄 O sistema verifica a cada segundo quem está conectado</li>
+          <li>🔔 Você recebe um aviso quando alguém conecta ou desconecta</li>
+        </ul>
+
+        <h3>O que as cores significam? 🎨</h3>
+        <ul>
+          <li>🟢 Verde: Dispositivo conectado</li>
+          <li>🔴 Vermelho: Dispositivo desconectado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script src="/static/js/notification.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

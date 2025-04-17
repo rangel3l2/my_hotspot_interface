@@ -1,0 +1,130 @@
+.about-button {
+  font-size: 14px;
+  padding: 5px 15px;
+  margin-left: 15px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.network-illustration {
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+  height: 200px;
+}
+
+.computer-icon {
+  font-size: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wifi-waves {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wave {
+  position: absolute;
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  animation: wave 2s infinite;
+}
+
+.wave1 { width: 50px; height: 50px; animation-delay: 0s; }
+.wave2 { width: 100px; height: 100px; animation-delay: 0.3s; }
+.wave3 { width: 150px; height: 150px; animation-delay: 0.6s; }
+
+@keyframes wave {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.devices {
+  position: absolute;
+  width: 100%;
+  top: 70%;
+}
+
+.device {
+  display: inline-block;
+  font-size: 30px;
+  margin: 0 20px;
+  animation: float 3s infinite ease-in-out;
+}
+
+.device:nth-child(2) { animation-delay: 0.3s; }
+.device:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.explanation {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.explanation h3 {
+  color: #2196F3;
+  margin-top: 20px;
+}
+
+.explanation ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.explanation li {
+  margin: 10px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+.explanation li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background: #4CAF50;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
