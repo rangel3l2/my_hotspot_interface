@@ -2,46 +2,144 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotspot Manager</title>
+  <link rel="stylesheet" href="/static/css/network-view.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/about.css">
 </head>
 <body>
-  <h1>🛜 Hotspot Manager <button id="btnSobre" class="about-button">Sobre</button></h1>
+  <div class="header">
+    <img src="/static/img/logoRangel.png" alt="Logo" class="logo">
+    <h1>Hotspot Manager <button id="btnSobre" class="about-button">Sobre</button></h1>
+    <p class="description">Sistema desenvolvido para administração do uso de smartphone por alunos para fins educativos, na disciplina de informática na Escola Estadual Padre João Tomes</p>
+  </div>
 
-  <button onclick="ativar()" id="btnAtivar">Ativar Hotspot</button>
-  <div class="loading" id="loadingBtnAtivar"></div>
-  <button onclick="desativar()" id="btnDesativar">Desativar Hotspot</button>
-  <div class="loading" id="loadingBtnDesativar"></div>
+  <div class="buttons-container">
+    <button id="btnAtivar">Ativar Hotspot</button>
+    <div class="loading" id="loadingBtnAtivar"></div>
+    <button id="btnDesativar">Desativar Hotspot</button>
+    <div class="loading" id="loadingBtnDesativar"></div>
+    <button id="btnIniciarAula" class="btn-aula" onclick="iniciarAula()">Iniciar Aula</button>
+    <button id="btnFinalizarAula" class="btn-aula" onclick="finalizarAula()" disabled>Finalizar Aula</button>
+    <span id="tempoAula" class="tempo-aula">Tempo decorrido: 0h 0m 0s</span>
+  </div>
 
-  <h2>📡 Dispositivos (<span id="contador">0</span>)</h2>
-  <div class="loading" id="loadingTabela"></div>
-  
-  <h3 class="section-title">Conectados</h3>
-  <table>
-    <thead>
-      <tr><th>Status</th><th>IP</th><th>MAC</th><th>Apelido</th></tr>
-    </thead>
-    <tbody id="tabelaConectados"></tbody>
-  </table>
+  <!-- Removed duplicate report table in report-section -->
+  <div class="report-section" style="display: none;">
+    <h3>Relatório da Aula</h3>
+  </div>
 
-  <h3 class="section-title">Desconectados</h3>
-  <table>
-    <thead>
-      <tr><th>Status</th><th>MAC</th><th>Apelido</th></tr>
-    </thead>
-    <tbody id="tabelaDesconectados"></tbody>
-  </table>
+  <div id="reportModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeReportModal()">&times;</span>
+      <h2>Relatório da Aula</h2>
+      <p>Deseja visualizar o relatório de tempo de aula?</p>
+      <div class="modal-buttons">
+        <button onclick="showReport()" class="btn-confirm">Sim</button>
+        <button onclick="cancelReport()" class="btn-cancel">Não</button>
+      </div>
+      <div id="reportContent">
+        <table id="reportTable">
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Tempo Total</th>
+              <th>% da Aula</th>
+              <th>Nota (0-8)</th>
+            </tr>
+          </thead>
+          <tbody id="reportBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="view-controls">
+      <h2>📡 Dispositivos (Online: <span id="contadorOnline">0</span>, Offline: <span id="contadorOffline">0</span>)</h2>
+      <div class="view-toggles">
+        <button class="view-toggle active" data-view="table" title="Visualização em Tabela">
+          <span class="icon">📋</span>
+        </button>
+        <button class="view-toggle" data-view="network" title="Visualização em Rede">
+          <span class="icon">🕸️</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="networkView" class="network-view" style="display: none;">
+      <div class="network-container">
+        <div class="server-node">
+          <span class="computer-icon">💻</span>
+          <span class="server-label">Servidor</span>
+        </div>
+        <div id="networkDevices" class="devices-container"></div>
+      </div>
+    </div>
+
+    <div id="tableView" class="table-view">
+      <div class="search-container">
+        <input type="text" id="searchDevices" placeholder="🔍 Localizar dispositivo..." class="search-input">
+      </div>
+      <div id="loadingtabela" class="loading"></div>
+      
+      <div class="tables-container">
+        <div class="section-collapsible table-section">
+          <h3 class="section-title">
+            <span class="toggle-icon" onclick="toggleSection('desconectados')">▼</span> 
+            <span>Desconectados</span>
+          </h3>
+          <div id="desconectados" class="section-content">
+            <table>
+              <thead>
+                <tr>
+                  <th class="cell-icon">📶</th>
+                  <th>MAC</th>
+                  <th>Apelido</th>
+                  <th>Tempo Offline</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaDesconectados"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-collapsible table-section">
+          <h3 class="section-title">
+            <span class="toggle-icon" onclick="toggleSection('conectados')">▼</span>
+            <span>Conectados</span>
+          </h3>
+          <div id="conectados" class="section-content">
+            <table>
+              <thead>
+                <tr>
+                  <th class="cell-icon">📶</th>
+                  <th>IP</th>
+                  <th>MAC</th>
+                  <th>Apelido</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaConectados"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="notification" class="notification"></div>
   <audio id="notificationSound" preload="auto">
     <source src="/static/sound/notification.mp3" type="audio/mpeg">
   </audio>
+  <audio id="connectSound" preload="auto">
+    <source src="/static/sound/entrada.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Modal Sobre -->
   <div id="aboutModal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close" onclick="closeAboutModal()">&times;</span>
       <h2>Como funciona o Hotspot Manager? 🎓</h2>
       
       <div class="network-illustration">
@@ -54,33 +152,77 @@
         <div class="devices">
           <div class="device">📱</div>
           <div class="device">📱</div>
-          <div class="device">💻</div>
+          <div class="device">📱</div>
         </div>
       </div>
 
       <div class="explanation">
         <h3>O que é um Hotspot? 🤔</h3>
-        <p>Um hotspot é como uma "ponte mágica" que permite seu computador crie uma rede com outros dispositivos!</p>
+        <p>Um hotspot é uma rede Wi-Fi criada pelo seu computador, permitindo que outros dispositivos se conectem à internet através dele.</p>
 
         <h3>Como funciona? 🌟</h3>
         <ul>
-          <li>🟢 Quando você ativa o hotspot, seu computador vira um "roteador ambulante" </li>
-          <li>📱 Celulares e outros computadores podem se conectar a ele</li>
-          <li>🔄 O sistema verifica a cada segundo quem está conectado</li>
-          <li>🔔 Você recebe um aviso quando alguém conecta ou desconecta</li>
+          <li>1. O computador cria uma rede Wi-Fi segura</li>
+          <li>2. Os alunos se conectam usando seus smartphones</li>
+          <li>3. O sistema monitora o tempo de conexão de cada aluno</li>
+          <li>4. Gera relatórios de presença e participação</li>
         </ul>
 
-        <h3>O que as cores significam? 🎨</h3>
+        <h3>Recursos 📱</h3>
         <ul>
-          <li>🟢 Verde: Dispositivo conectado</li>
-          <li>🔴 Vermelho: Dispositivo desconectado</li>
+          <li>✅ Monitoramento em tempo real</li>
+          <li>✅ Controle de presença automático</li>
+          <li>✅ Relatórios detalhados</li>
+          <li>✅ Interface intuitiva</li>
         </ul>
       </div>
     </div>
   </div>
 
+  <!-- Scripts - Move to end of body -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-  <script src="/static/js/notification.js"></script>
+  <script>
+    // Global functions
+    function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      const icon = section.previousElementSibling.querySelector('.toggle-icon');
+      
+      if (section && icon) {
+        section.classList.toggle('collapsed');
+        icon.classList.toggle('collapsed');
+      }
+    }
+
+    // Add event listeners after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('btnAtivar').addEventListener('click', ativar);
+      document.getElementById('btnDesativar').addEventListener('click', desativar);
+      document.getElementById('btnSobre').addEventListener('click', function() {
+        document.getElementById('aboutModal').style.display = 'block';
+      });
+      
+      // Initialize sections
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.remove('collapsed');
+      });
+    });
+
+    function closeAboutModal() {
+      document.getElementById('aboutModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const aboutModal = document.getElementById('aboutModal');
+      const reportModal = document.getElementById('reportModal');
+      
+      if (event.target === aboutModal) {
+        closeAboutModal();
+      } else if (event.target === reportModal) {
+        closeReportModal();
+      }
+    }
+  </script>
   <script src="/static/js/app.js"></script>
 </body>
 </html>

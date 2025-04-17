@@ -1,0 +1,175 @@
+.view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.view-toggles {
+  display: flex;
+  gap: 10px;
+}
+
+.view-toggle {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.view-toggle:hover {
+  border-color: #2196F3;
+}
+
+.view-toggle.active {
+  background: #2196F3;
+  border-color: #2196F3;
+  color: white;
+}
+
+.view-toggle .icon {
+  font-size: 1.2em;
+}
+
+.network-view {
+  position: relative;
+  min-height: 70vh;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  overflow: hidden;
+  cursor: move;
+}
+
+.network-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.server-node {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.server-node .computer-icon {
+  font-size: 2.5em;
+  display: block;
+}
+
+.server-label {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+  display: block;
+}
+
+.devices-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  padding-top: 120px;
+  z-index: 1;
+}
+
+.device-node {
+  position: absolute;
+  text-align: center;
+  transition: none;
+  cursor: move;
+  user-select: none;
+  z-index: 2;
+}
+
+.device-node.dragging {
+  opacity: 0.8;
+  z-index: 1000;
+}
+
+.device-node .phone-icon {
+  font-size: 2em;
+  display: block;
+}
+
+.device-node .device-label {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 5px;
+}
+
+.device-node .device-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: -5px;
+}
+
+.device-node .device-status.online {
+  background: #4CAF50;
+}
+
+.device-node .device-status.offline {
+  background: #f44336;
+}
+
+.connection-handle {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 2px solid #2196F3;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.connection-handle.start {
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.connection-handle.end {
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.connection-line {
+  position: absolute;
+  height: 2px;
+  background: #4CAF50;
+  transform-origin: 0 50%;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.connection-line:hover {
+  height: 4px;
+}
+
+.connection-line.selected {
+  border: 1px solid #2196F3;
+  height: 4px;
+}
+
+.connection-line.offline {
+  background: #f44336;
+  background-image: linear-gradient(90deg, #f44336 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+  to { background-position: 20px 0; }
+}
